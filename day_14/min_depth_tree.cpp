@@ -27,8 +27,11 @@ int depth(TreeNode *node)
     {
         return l_d + 1;
     }
+
+    int d = std::min(r_d, l_d) + 1;
 }
 
 int min_depth_tree(TreeNode *root)
 {
+    return depth(root);
 }
