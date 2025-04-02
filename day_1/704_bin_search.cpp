@@ -54,6 +54,32 @@ int bin_search_v2(const std::vector<int> &vec, int target)
     return -1;
 }
 
+int bin_search_v3(std::vector<int> &vec, int target)
+{
+    int left = 0;
+    int right = vec.size() - 1;
+
+    while (left <= right)
+    {
+        int mid = left + (right - left) / 2;
+
+        if (vec[mid] == target)
+        {
+            return mid;
+        }
+        else if (vec[mid] < target)
+        {
+            left = mid + 1;
+        }
+        else if (vec[mid] > target)
+        {
+            right = mid - 1;
+        }
+    }
+
+    return -1;
+}
+
 int main()
 {
     std::vector<int> vec{-1, 0, 3, 5, 9, 12};

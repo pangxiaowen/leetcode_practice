@@ -38,6 +38,32 @@ void sort_v2(std::vector<int> &vec)
     vec = res;
 }
 
+void sort_v3(std::vector<int> &vec)
+{
+    std::vector<int> res;
+    res.resize(vec.size());
+    int index = vec.size() - 1;
+
+    int left = 0;
+    int right = vec.size() - 1;
+    while (left <= right)
+    {
+        if (std::abs(vec[left]) > std::abs(vec[right]))
+        {
+            res[index] = vec[left] * vec[left];
+            left++;
+        }
+        else
+        {
+            res[index] = vec[right] * vec[right];
+            right--;
+        }
+        index--;
+    }
+
+    vec = res;
+}
+
 int main()
 {
     std::vector<int> vec{-4, -1, 0, 3, 10};
