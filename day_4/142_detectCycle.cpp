@@ -4,9 +4,7 @@ struct ListNode
 {
     int val;
     ListNode *next;
-    ListNode(int i) : val{i}, next{nullptr}
-    {
-    }
+    ListNode(int i) : val{i}, next{nullptr} {}
 };
 
 ListNode *detect_cycle(ListNode *head)
