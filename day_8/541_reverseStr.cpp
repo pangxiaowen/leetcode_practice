@@ -1,6 +1,6 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
-#include <algorithm>
 
 // 当需要固定规律一段一段去处理字符串的时候，要想想在在for循环的表达式上做做文章。
 std::string reverse_2(std::string str, int k)

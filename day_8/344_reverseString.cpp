@@ -1,5 +1,5 @@
-#include <string>
 #include <iostream>
+#include <string>
 
 void reverse(std::string &str)
 {

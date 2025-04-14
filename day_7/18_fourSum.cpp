@@ -1,6 +1,7 @@
-#include <vector>
 #include <algorithm>
+#include <cstddef>
 #include <iostream>
+#include <vector>
 
 std::vector<std::vector<int>> four_sum(std::vector<int> nums, int target)
 {
@@ -57,6 +58,63 @@ std::vector<std::vector<int>> four_sum(std::vector<int> nums, int target)
 
                     left++;
                     right--;
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
+std::vector<std::vector<int>> four_sum_v2(std::vector<int> nums, int target)
+{
+    std::vector<std::vector<int>> result;
+    std::sort(nums.begin(), nums.end());
+
+    for (size_t i = 0; i < nums.size(); ++i)
+    {
+        if (i > 0 && nums[i] == nums[i - 1])
+            continue;
+
+        if (nums[i] > target && nums[i] > 0)
+            break;
+
+        for (size_t j = i + 1; j < nums.size(); ++j)
+        {
+            if ((nums[j] + nums[i] > target) && (nums[j] + nums[i]) > 0)
+                break;
+
+            if (j > i + 1 && nums[j] == nums[j - 1])
+                continue;
+
+            int l = j + 1;
+            int r = nums.size() - 1;
+            while (l < r)
+            {
+                if ((long)nums[i] + nums[j] + nums[l] + nums[r] > target)
+                {
+                    r--;
+                }
+                else if ((long)nums[i] + nums[j] + nums[l] + nums[r] < target)
+                {
+                    l++;
+                }
+                else
+                {
+                    result.push_back({nums[i], nums[j], nums[l], nums[r]});
+
+                    while (l < r && nums[l] == nums[l + 1])
+                    {
+                        l++;
+                    }
+
+                    while (l < r && nums[r] == nums[r - 1])
+                    {
+                        r--;
+                    }
+
+                    l++;
+                    r--;
                 }
             }
         }

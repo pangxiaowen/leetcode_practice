@@ -1,24 +1,29 @@
 #include <iostream>
-#include <vector>
+#include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 std::vector<int> intersection(std::vector<int> a, std::vector<int> b)
 {
-    std::unordered_set<int> tmp;
-    std::vector<int> res;
-    for (auto it : a)
+    std::unordered_map<int, bool> nums;
+    for (const auto &it : a)
     {
-        tmp.insert(it);
+        nums[it] = true;
     }
 
-    for (auto it : b)
+    std::unordered_set<int> result;
+    for (const auto &it : b)
     {
-        auto iter = tmp.find(it);
-        if (iter != tmp.end())
+        if (nums[it])
         {
-            res.push_back(it);
-            tmp.erase(iter);
+            result.insert(it);
         }
+    }
+
+    std::vector<int> res;
+    for (const auto &it : result)
+    {
+        res.push_back(it);
     }
 
     return res;
