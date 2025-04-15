@@ -1,6 +1,7 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <string>
+#include <type_traits>
 
 std::string reverse(std::string str, int k)
 {
@@ -31,6 +32,16 @@ std::string str_reverse(std::string str)
     }
 
     return str;
+}
+
+std::string right_handed_string(std::string str, int k)
+{
+    // 1.
+    std::reverse(str.begin(), str.end());
+
+    // 2.
+    std::reverse(str.begin(), str.begin() + k);
+    std::reverse(str.begin() + k, str.end());
 }
 
 int main()
