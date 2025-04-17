@@ -1,7 +1,8 @@
-#include <queue>
-#include <vector>
+#include <functional>
 #include <iostream>
+#include <queue>
 #include <unordered_map>
+#include <vector>
 
 class mycomparison
 {
@@ -21,7 +22,11 @@ std::vector<int> topk_frequent(std::vector<int> nums, int k)
         nums_map[it]++;
     }
 
-    std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, mycomparison> prio_queue;
+    // std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, mycomparison>
+    //     prio_queue;
+
+    std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, mycomparison>
+        prio_queue;
 
     for (auto it : nums_map)
     {
