@@ -6,7 +6,7 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
@@ -33,10 +33,11 @@ TreeNode *traversal(std::vector<int> &&preorder, std::vector<int> &&inorder)
         }
     }
 
-    root->left = traversal({preorder.begin() + 1, preorder.begin() + index + 1},
-                           {inorder.begin(), inorder.begin() + index - 1 + 1}); // 前序和中序的长度是一样的,  左闭右开
-    root->right =
-        traversal({preorder.begin() + index + 1, preorder.end()}, {inorder.begin() + index + 1, inorder.end()});
+    root->left = traversal(
+        {preorder.begin() + 1, preorder.begin() + index + 1},
+        {inorder.begin(), inorder.begin() + index - 1 + 1}); // 前序和中序的长度是一样的,  左闭右开
+    root->right = traversal({preorder.begin() + index + 1, preorder.end()},
+                            {inorder.begin() + index + 1, inorder.end()});
 
     return root;
 }

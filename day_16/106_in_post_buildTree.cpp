@@ -6,7 +6,7 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
@@ -19,17 +19,18 @@ TreeNode *traversal(std::vector<int> &inorder, std::vector<int> &postorder)
 
     TreeNode *root = new TreeNode();
     root->val = postorder[postorder.size() - 1]; // 后序的最后一个值是 父节点
-
-    postorder.resize(postorder.size() - 1); // 将最后一个节点删除
+    postorder.resize(postorder.size() - 1);      // 将最后一个节点删除
 
     // 根据父节点进行切割 inorder
-    auto inorder_index = std::find(inorder.begin(), inorder.end(), root->val); // 找到父节点的位置, 分成左右两边
-    std::vector<int> inorder_left{inorder.begin(), inorder_index};             // 0 ~ index-1
-    std::vector<int> inorder_right{inorder_index + 1, inorder.end()};          // index + 1 ~ end
+    auto inorder_index =
+        std::find(inorder.begin(), inorder.end(), root->val); // 找到父节点的位置, 分成左右两边
+    std::vector<int> inorder_left{inorder.begin(), inorder_index};    // 0 ~ index-1
+    std::vector<int> inorder_right{inorder_index + 1, inorder.end()}; // index + 1 ~ end
 
     auto postorder_index = postorder.end();
     if (!inorder_right.empty())
-        postorder_index = std::find(postorder.begin(), postorder.end(), inorder_right[0]); // 寻找父节点的位置
+        postorder_index =
+            std::find(postorder.begin(), postorder.end(), inorder_right[0]); // 寻找父节点的位置
 
     std::vector<int> postorder_left{postorder.begin(), postorder_index}; // 分为左右两边
     std::vector<int> postorder_right{postorder_index, postorder.end()};
@@ -51,21 +52,44 @@ TreeNode *traversal_v2(std::vector<int> &&inorder, std::vector<int> &&postorder)
     postorder.resize(postorder.size() - 1); // 将最后一个节点删除
 
     // 根据父节点进行切割 inorder
-    auto inorder_index = std::find(inorder.begin(), inorder.end(), root->val); // 找到父节点的位置, 分成左右两边
+    auto inorder_index =
+        std::find(inorder.begin(), inorder.end(), root->val); // 找到父节点的位置, 分成左右两边
     // std::vector<int> inorder_left{inorder.begin(), inorder_index};             // 0 ~ index-1
     // std::vector<int> inorder_right{inorder_index + 1, inorder.end()};          // index + 1 ~ end
 
     // auto postorder_index = postorder.end();
     // if (!inorder_right.empty())
-    //     postorder_index = std::find(postorder.begin(), postorder.end(), inorder_right[0]); // 寻找父节点的位置
+    //     postorder_index = std::find(postorder.begin(), postorder.end(), inorder_right[0]); //
+    //     寻找父节点的位置
 
     // std::vector<int> postorder_left{postorder.begin(), postorder_index}; // 分为左右两边
     // std::vector<int> postorder_right{postorder_index, postorder.end()};
 
-    root->left = traversal_v2({inorder.begin(), inorder_index},
-                              {postorder.begin(), postorder.begin() + (inorder_index - inorder.begin())});
-    root->right = traversal_v2({inorder_index + 1, inorder.end()},
-                               {postorder.begin() + (inorder_index - inorder.begin()), postorder.end()});
+    root->left =
+        traversal_v2({inorder.begin(), inorder_index},
+                     {postorder.begin(), postorder.begin() + (inorder_index - inorder.begin())});
+    root->right =
+        traversal_v2({inorder_index + 1, inorder.end()},
+                     {postorder.begin() + (inorder_index - inorder.begin()), postorder.end()});
+
+    return root;
+}
+
+TreeNode *Traversal(std::vector<int> &&inorder, std::vector<int> &&postorder)
+{
+    if (inorder.empty())
+        return nullptr;
+
+    // 根据后序遍历确认顶点。
+    TreeNode *root = new TreeNode();
+    root->val = postorder[postorder.size() - 1];
+
+    // 根据顶点在中序遍历中的位置，区分左右子树
+    auto iter = std::find(inorder.begin(), inorder.end(), root->val);
+    int size = iter - inorder.begin();
+
+    root->left = Traversal({inorder.begin(), iter}, {postorder.begin(), postorder.begin() + size});
+    root->right = Traversal({iter + 1, inorder.end()}, {postorder.begin() + size, postorder.end()});
 
     return root;
 }

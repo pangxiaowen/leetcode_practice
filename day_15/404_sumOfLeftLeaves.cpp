@@ -5,7 +5,7 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
@@ -57,6 +57,4 @@ void Traversal(TreeNode *node, int &res)
     Traversal(node->right, res);
 }
 
-int sum_of_left_leaves_v2(TreeNode *root)
-{
-}
+int sum_of_left_leaves_v2(TreeNode *root) {}

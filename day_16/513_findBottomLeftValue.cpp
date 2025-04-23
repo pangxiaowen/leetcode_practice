@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <iostream>
 #include <queue>
 #include <stack>
@@ -5,7 +6,7 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
@@ -21,7 +22,6 @@ int find_bottom_left_value(TreeNode *root)
     while (!queue.empty())
     {
         int size = queue.size();
-
         val = queue.front()->val;
 
         for (int i = 0; i < size; --i)
@@ -40,7 +40,7 @@ int find_bottom_left_value(TreeNode *root)
     return val;
 }
 
-int max_depth = INT_MIN;
+int max_depth = INT32_MIN;
 int result;
 void traversal(TreeNode *root, int depth)
 {

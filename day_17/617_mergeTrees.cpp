@@ -6,7 +6,7 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
@@ -32,6 +32,52 @@ TreeNode *traversal(TreeNode *root1, TreeNode *root2)
     return root;
 }
 
+TreeNode *Traversal(TreeNode *root1, TreeNode *root2)
+{
+    if (root1 == nullptr && root2 == nullptr)
+    {
+        return nullptr;
+    }
+
+    if (root1 != nullptr && root2 == nullptr)
+    {
+        return root1;
+    }
+
+    if (root2 != nullptr && root1 == nullptr)
+    {
+        return root2;
+    }
+
+    TreeNode *node = new TreeNode();
+    node->val = root1->val + root2->val;
+    node->left = Traversal(root1->left, root2->left);
+    node->right = Traversal(root1->right, root2->right);
+    return node;
+}
+TreeNode *Traversalv2(TreeNode *root1, TreeNode *root2)
+{
+    if (root1 == nullptr && root2 == nullptr)
+    {
+        return nullptr;
+    }
+
+    if (root1 != nullptr && root2 == nullptr)
+    {
+        return root1;
+    }
+
+    if (root2 != nullptr && root1 == nullptr)
+    {
+        return root2;
+    }
+
+    root1->val = root1->val + root2->val;
+    root1->left = Traversal(root1->left, root2->left);
+    root1->right = Traversal(root1->right, root2->right);
+    return root1;
+}
+
 TreeNode *mergeTree(TreeNode *t1, TreeNode *t2)
 {
     if (t1 == nullptr)
@@ -48,6 +94,7 @@ TreeNode *mergeTree(TreeNode *t1, TreeNode *t2)
         TreeNode *node_1 = que.front();
         que.pop();
         TreeNode *node_2 = que.front();
+        que.pop();
 
         node_1->val = node_1->val + node_2->val;
 
