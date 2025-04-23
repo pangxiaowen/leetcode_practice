@@ -1,7 +1,7 @@
 #include <iostream>
+#include <queue>
 #include <stack>
 #include <vector>
-#include <queue>
 
 class TreeNode
 {
@@ -21,10 +21,7 @@ void invert(TreeNode *node)
     invert(node->right);
 }
 
-void invert_tree(TreeNode *root)
-{
-    invert(root);
-}
+void invert_tree(TreeNode *root) { invert(root); }
 
 void invert_tree_v2(TreeNode *root)
 {

@@ -1,7 +1,7 @@
 #include <iostream>
+#include <queue>
 #include <stack>
 #include <vector>
-#include <queue>
 
 class TreeNode
 {
@@ -23,10 +23,7 @@ int depth(TreeNode *node)
     return d;
 }
 
-int depth_tree(TreeNode *root)
-{
-    depth(root);
-}
+int depth_tree(TreeNode *root) { depth(root); }
 
 int depth_v2(TreeNode *root)
 {
