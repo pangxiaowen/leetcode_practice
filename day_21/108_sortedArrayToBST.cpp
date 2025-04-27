@@ -7,15 +7,13 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
 
     TreeNode() = default;
-    TreeNode(int v) : val(v)
-    {
-    }
+    TreeNode(int v) : val(v) {}
 };
 
 TreeNode *sortedArrayToBST(std::vector<int> &nums)
@@ -47,4 +45,45 @@ int main()
     sortedArrayToBST(nums);
 
     return 0;
+}
+
+TreeNode *Traversal(std::vector<int> &nums, int l, int r)
+{
+    if (l > r)
+        return nullptr;
+
+    // 可能越界
+    // int mid = (l + r) / 2;
+    int mid = l + (r - l) / 2;
+    TreeNode *node = new TreeNode();
+    node->val = nums[mid];
+
+    node->left = Traversal(nums, l, mid - 1);
+    node->right = Traversal(nums, mid + 1, r);
+
+    return node;
+}
+
+TreeNode *sortedArrayToBSTv2(std::vector<int> &nums)
+{
+    if (nums.empty())
+        return nullptr;
+
+    int mid = nums.size() / 2;
+    TreeNode *node = new TreeNode();
+    node->val = nums[mid];
+
+    if (mid == 0)
+        return node;
+
+    std::vector<int> left{nums.begin(), nums.begin() + mid};
+    node->left = sortedArrayToBSTv2(left);
+
+    if (mid + 1 < nums.size())
+    {
+        std::vector<int> right{nums.begin() + mid + 1, nums.end()};
+        node->right = sortedArrayToBSTv2(right);
+    }
+
+    return node;
 }
