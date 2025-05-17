@@ -1,4 +1,6 @@
+#include <cstddef>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 int cal_nums(std::string str)
@@ -50,8 +52,28 @@ std::string replace(std::string str)
     return new_str;
 }
 
+std::string replace_v2(std::string str)
+{
+    std::string insert = "number";
+    std::stringstream ss;
+
+    for (size_t i = 0; i < str.size(); ++i)
+    {
+        if (str[i] < 'a')
+        {
+            ss << insert;
+        }
+        else
+        {
+            ss << str[i];
+        }
+    }
+
+    return ss.str();
+}
+
 int main()
 {
-    std::string str = "a5b";
-    std::cout << replace(str) << std::endl;
+    std::string str = "a1b2bc";
+    std::cout << replace_v2(str) << std::endl;
 }

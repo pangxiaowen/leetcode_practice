@@ -5,7 +5,7 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
@@ -13,7 +13,7 @@ class TreeNode
 
 class Solution
 {
-  public:
+public:
     std::vector<std::vector<int>> res; // 用于记录所有结果
     std::vector<int> path;             // 用于回溯存储
 

@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstdint>
 #include <iostream>
 #include <queue>
 #include <stack>
@@ -6,7 +7,7 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
@@ -73,4 +74,64 @@ int getMinimumDifference(TreeNode *root)
     }
 
     return min;
+}
+
+int offset_min = INT32_MAX;
+TreeNode *pre_node = nullptr;
+void Traversal(TreeNode *node)
+{
+    if (node == nullptr)
+        return;
+
+    Traversal(node->left);
+
+    if (pre_node != nullptr)
+    {
+        int offset = node->val - pre_node->val;
+        offset_min = offset_min > offset ? offset : offset_min;
+    }
+    pre = node;
+    Traversal(node->right);
+}
+
+int getMinimumDifferencev2(TreeNode *root)
+{
+    int offset_min = INT32_MAX;
+    if (root == nullptr)
+        return offset_min;
+
+    std::stack<TreeNode *> st;
+    st.push(root);
+    TreeNode *pre = nullptr;
+
+    while (!st.empty())
+    {
+        TreeNode *cur = st.top();
+        st.pop();
+
+        if (cur != nullptr)
+        {
+            if (cur->right != nullptr)
+                st.push(cur->right);
+
+            st.push(cur);
+            st.push(nullptr);
+
+            if (cur->left != nullptr)
+                st.push(cur->left);
+        }
+        else
+        {
+            cur = st.top();
+            st.pop();
+            if (pre != nullptr)
+            {
+                int offset = cur->val - pre->val;
+                offset_min = offset_min > offset ? offset : offset_min;
+            }
+            pre = cur;
+        }
+    }
+
+    return offset_min;
 }

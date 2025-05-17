@@ -7,7 +7,7 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
@@ -32,47 +32,6 @@ TreeNode *lowest_common_ancestor(TreeNode *root, TreeNode *p, TreeNode *q)
         return left;
 }
 
-// 二叉搜索树的公共祖先， 第一个满足p < val < q 就是最近公共祖先。 采用中序遍历可以实现顺序访问。
-TreeNode *lowest_common_ancestor_v2(TreeNode *root, TreeNode *p, TreeNode *q)
-{
-    if (root == nullptr)
-        return root;
-    std::stack<TreeNode *> st;
-    st.push(root);
-
-    if (p->val > q->val)
-        std::swap(p, q);
-
-    while (!st.empty())
-    {
-        auto cur = st.top();
-        st.pop();
-
-        if (cur != nullptr)
-        {
-            if (cur->right != nullptr)
-                st.push(cur->right);
-            if (cur->left != nullptr)
-                st.push(cur->left);
-
-            st.push(cur);
-            st.push(nullptr);
-        }
-        else
-        {
-            cur = st.top();
-            st.pop();
-
-            if (cur->val >= p->val && cur->val <= q->val)
-            {
-                return cur;
-            }
-        }
-    }
-
-    return nullptr;
-}
-
 TreeNode *lowest_common_ancestor_v3(TreeNode *root, TreeNode *p, TreeNode *q)
 {
     if (root == nullptr)
@@ -94,7 +53,7 @@ TreeNode *lowest_common_ancestor_v3(TreeNode *root, TreeNode *p, TreeNode *q)
     return root;
 }
 
-TreeNode *lowest_common_ancestor_v3(TreeNode *root, TreeNode *p, TreeNode *q)
+TreeNode *lowest_common_ancestor_v4(TreeNode *root, TreeNode *p, TreeNode *q)
 {
     while (root != nullptr)
     {
@@ -105,4 +64,84 @@ TreeNode *lowest_common_ancestor_v3(TreeNode *root, TreeNode *p, TreeNode *q)
         else
             return root;
     }
+}
+
+TreeNode *Traversal(TreeNode *node, TreeNode *p, TreeNode *q)
+{
+    if (node == p || node == q || node == nullptr)
+    {
+        return node;
+    }
+
+    TreeNode *left_node = nullptr, *right_node = nullptr;
+    if (node->val >= p->val || node->val >= q->val)
+        left_node = Traversal(node->left, p, q);
+
+    if (node->val <= p->val || node->val <= q->val)
+        right_node = Traversal(node->right, p, q);
+
+    if (left_node != nullptr && right_node != nullptr)
+    {
+        return node;
+    }
+
+    if (left_node != nullptr)
+    {
+        return left_node;
+    }
+
+    if (right_node != nullptr)
+    {
+        return right_node;
+    }
+
+    return nullptr;
+}
+
+TreeNode *Traversalv2(TreeNode *node, TreeNode *p, TreeNode *q)
+{
+    if (node == p || node == q || node == nullptr)
+    {
+        return node;
+    }
+
+    if (node->val > p->val && node->val > q->val)
+    {
+        return Traversal(node->left, p, q);
+    }
+    else if (node->val < p->val && node->val < q->val)
+    {
+        return Traversal(node->right, p, q);
+    }
+    else
+    {
+        return node;
+    }
+    return nullptr;
+}
+
+TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
+{
+    return Traversal(root, p, q);
+}
+
+TreeNode *lowestCommonAncestorv2(TreeNode *root, TreeNode *p, TreeNode *q)
+{
+    while (root != nullptr)
+    {
+        if (root->val > p->val && root->val > q->val)
+        {
+            root = root->left;
+        }
+        else if (root->val < p->val && root->val < q->val)
+        {
+            root = root->right;
+        }
+        else
+        {
+            return root;
+        }
+    }
+
+    return nullptr;
 }

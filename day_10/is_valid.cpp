@@ -23,6 +23,7 @@ bool is_valid(std::vector<char> vec)
             if (right_stack.empty())
                 return false;
             char right_top = right_stack.top();
+            right_stack.pop();
             if (right_top != ')')
                 return false;
         }
@@ -31,6 +32,7 @@ bool is_valid(std::vector<char> vec)
             if (right_stack.empty())
                 return false;
             char right_top = right_stack.top();
+            right_stack.pop();
             if (right_top != ']')
                 return false;
         }
@@ -39,6 +41,7 @@ bool is_valid(std::vector<char> vec)
             if (right_stack.empty())
                 return false;
             char right_top = right_stack.top();
+            right_stack.pop();
             if (right_top != '}')
                 return false;
         }

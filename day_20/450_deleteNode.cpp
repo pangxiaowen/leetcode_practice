@@ -7,15 +7,13 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
 
     TreeNode() = default;
-    TreeNode(int v) : val(v)
-    {
-    }
+    TreeNode(int v) : val(v) {}
 };
 
 TreeNode *deleteNode(TreeNode *root, int key)

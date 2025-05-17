@@ -7,15 +7,13 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
 
     TreeNode() = default;
-    TreeNode(int v) : val(v)
-    {
-    }
+    TreeNode(int v) : val(v) {}
 };
 
 TreeNode *insertIntoBST(TreeNode *root, int val)
@@ -49,7 +47,7 @@ TreeNode *insertIntoBST(TreeNode *root, int val)
     return head;
 }
 
-TreeNode *insertIntoBST(TreeNode *root, int val)
+TreeNode *Travseral(TreeNode *root, int val)
 {
     // 当遍历到叶子的时候，说明找到插入位置了
     if (root == nullptr)
@@ -57,12 +55,12 @@ TreeNode *insertIntoBST(TreeNode *root, int val)
 
     if (root->val > val)
     {
-        root->left = insertIntoBST(root->left, val);
+        root->left = Travseral(root->left, val);
     }
 
     if (root->val < val)
     {
-        root->right = insertIntoBST(root->right, val);
+        root->right = Travseral(root->right, val);
     }
 
     return root;

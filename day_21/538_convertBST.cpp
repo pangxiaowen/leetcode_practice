@@ -7,15 +7,13 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
 
     TreeNode() = default;
-    TreeNode(int v) : val(v)
-    {
-    }
+    TreeNode(int v) : val(v) {}
 };
 
 TreeNode *pre;
@@ -67,4 +65,20 @@ TreeNode *convertBST_v2(TreeNode *root)
             pre = cur;
         }
     }
+}
+
+TreeNode *pre_node = nullptr;
+void Traversal(TreeNode *node)
+{
+    if (node == nullptr)
+        return;
+
+    Traversal(node->right);
+
+    if (pre_node != nullptr)
+    {
+        node->val = node->val + pre_node->val;
+    }
+    pre_node = node;
+    Traversal(node->left);
 }

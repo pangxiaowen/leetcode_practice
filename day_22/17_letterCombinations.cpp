@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <vector>
 
 std::vector<std::string> result;
@@ -61,6 +62,7 @@ void letterCombinations(std::vector<int> nums)
 
     std::string res;
     tracebacking(vec, k, 0, res);
+    std::string str;
 }
 
 int main()

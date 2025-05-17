@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstdint>
 #include <iostream>
 #include <queue>
 #include <stack>
@@ -7,7 +8,7 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
@@ -75,7 +76,9 @@ std::vector<int> find_model(TreeNode *root)
         count.push_back({it.first, it.second});
     }
 
-    auto func = [](const std::pair<int, int> &a, std::pair<int, int> &b) { return a.second > b.second; };
+    auto func = [](const std::pair<int, int> &a, std::pair<int, int> &b) {
+        return a.second > b.second;
+    };
     std::sort(count.begin(), count.end(), func);
 
     int max = count[0].second;
@@ -87,4 +90,50 @@ std::vector<int> find_model(TreeNode *root)
     }
 
     return result;
+}
+
+int MAX_COUNT = INT32_MIN;
+int CUR_COUNT = 1;
+TreeNode *pre_node = nullptr;
+std::vector<int> RESULT;
+void Traversal(TreeNode *node)
+{
+    if (node == nullptr)
+    {
+        return;
+    }
+
+    Traversal(node->left);
+
+    if (pre_node != nullptr)
+    {
+        if (pre_node->val == node->val)
+        {
+            CUR_COUNT++;
+        }
+        else
+        {
+            CUR_COUNT = 1;
+        }
+    }
+    pre_node = node;
+
+    if (MAX_COUNT == CUR_COUNT)
+    {
+        RESULT.push_back(node->val);
+    }
+    else if (MAX_COUNT < CUR_COUNT)
+    {
+        MAX_COUNT = CUR_COUNT;
+        RESULT.clear();
+        RESULT.push_back(node->val);
+    }
+
+    Traversal(node->right);
+}
+
+std::vector<int> findMode(TreeNode *root)
+{
+    Traversal(root);
+    return RESULT;
 }
