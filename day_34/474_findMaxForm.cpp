@@ -1,6 +1,23 @@
 #include <string>
 #include <vector>
 
+// 给你一个二进制字符串数组 strs 和两个整数 m 和 n 。
+// 请你找出并返回 strs 的最大子集的大小，该子集中 最多 有 m 个 0 和 n 个 1 。
+// 如果 x 的所有元素也是 y 的元素，集合 x 是集合 y 的 子集 。
+
+// 下标含义
+// dp[i][j] 含有i和0 和 n 个 1的 最大子集大小
+
+// DP公式
+// dp[i][j] = std::max(dp[i][j], dp[i - zero_nums][j - one_nums] + 1])
+
+// 初始化
+// dp[0][0] = 0;
+
+// 遍历顺序
+// 1. 遍历strs
+// 2. 从m,n开始遍历到 i >= zero_nums 和 j >= one_nums
+
 // 最多 有 m 个 0 和 n 个 1 。
 int acl_zero_nums(std::string &str)
 {
@@ -77,8 +94,29 @@ int findMaxForm(std::vector<std::string> &strs, int m, int n)
     return dp[strs.size() - 1][m][n];
 }
 
+int findMaxForm_(std::vector<std::string> &strs, int m, int n)
+{
+    std::vector<std::vector<int>> dp(m + 1, std::vector<int>(n + 1, 0));
+
+    for (int i = 0; i < strs.size(); i++)
+    {
+        int zero_nums = acl_zero_nums(strs[i]);
+        int one_nums = acl_one_nums(strs[i]);
+
+        for (int j = m; j >= zero_nums; j--)
+        {
+            for (int k = n; k >= one_nums; k--)
+            {
+                dp[j][k] = std::max(dp[j][k], dp[j - zero_nums][k - one_nums] + 1);
+            }
+        }
+    }
+
+    return dp[m][n];
+}
+
 int main()
 {
     std::vector<std::string> strs{"0", "0", "1", "1"};
-    findMaxForm(strs, 2, 2);
+    findMaxForm_(strs, 2, 2);
 }

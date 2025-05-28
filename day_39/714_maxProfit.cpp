@@ -6,8 +6,6 @@
 // 返回获得利润的最大值。
 // 注意：这里的一笔交易指买入持有并卖出股票的整个过程，每笔交易你只需要为支付一次手续费。
 
-//
-
 // dp[i][0] 持有股票的最大利润
 //      1. 前一天就持有  2. 前一天卖出股票， 今天买入
 // dp[i][1] 不持有股票的最大利润
@@ -15,10 +13,10 @@
 
 // dp[i][0] = std::max(dp[i - 1][0], dp[i - 1][1] - prices[i])
 // dp[i][1] = std::max(dp[i-1][1], dp[i-1][0] + prices[i] - fee)
+// 卖出的时候交手续费即可
 
 int maxProfit(std::vector<int> &prices, int fee)
 {
-
     std::vector<std::vector<int>> dp(prices.size(), std::vector<int>(2, 0));
 
     dp[0][0] = -prices[0];
@@ -51,6 +49,21 @@ int maxProfitv2(std::vector<int> &prices, int fee)
 
     return std::max(std::max(dp[prices.size() - 1][0], dp[prices.size() - 1][1]),
                     dp[prices.size() - 1][2]);
+}
+
+int maxProfitv3(std::vector<int> &prices, int fee)
+{
+    std::vector<std::vector<int>> dp(prices.size(), std::vector<int>(2, 0));
+
+    dp[0][0] = -prices[0];        // 第0天持有股票后的最大利润-prices[0]
+    dp[0][1] = std::max(0, -fee); // 第0天卖出再卖出股票后的最大利润
+
+    for (int i = 0; i < prices.size(); i++)
+    {
+        dp[i][0] = std::max(dp[i - 1][0], dp[i - 1][1] - prices[i]);
+        dp[i][1] = std::max(dp[i - 1][1], dp[i - 1][0] + prices[i] - fee);
+    }
+    return std::max(dp[prices.size() - 1][0], dp[prices.size() - 1][1]);
 }
 
 int main()

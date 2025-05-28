@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <numeric>
 #include <vector>
 
 bool can = false;
@@ -76,4 +77,56 @@ bool canPartitionv2(std::vector<int> &nums)
     }
 
     return dp[target] == target;
+}
+
+// 给定一个只包含正整数的非空数组。是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
+
+// 1. sub1 == sub2 && sub1 + sub2 = nums
+// 2. 可以求得sub1 是多少
+// 3. 本题可以转化为，在数组中任选n个值，使它的总和为target
+
+// dp[i][j]  i->{0~n}  j->{0~target}
+
+// dp[i][j]  在容量大小为j的情况下， 在0～i 中任选值的最大和
+
+bool canPartitionv3(std::vector<int> &nums)
+{
+    if (nums.size() <= 1)
+        return false;
+
+    int target = std::accumulate(nums.begin(), nums.end(), 0);
+
+    // 如果target % 2 不能0， 那该数组无法分成两份
+    if (target % 2 != 0)
+    {
+        return false;
+    }
+
+    target = target / 2;
+
+    std::vector<std::vector<int>> dp(nums.size(), std::vector<int>(target + 1, 0));
+
+    for (int i = nums[0]; i < target + 1; i++)
+    {
+        dp[0][i] = nums[0];
+    }
+
+    for (int i = 1; i < nums.size(); i++)
+    {
+        for (int j = 1; j < target + 1; j++)
+        {
+            if (nums[i] > j)
+                dp[i][j] = dp[i - 1][j];
+            else
+                dp[i][j] = std::max(dp[i - 1][j], dp[i - 1][j - nums[i]] + nums[i]);
+        }
+    }
+
+    return dp[nums.size() - 1][target] == target;
+}
+
+int main()
+{
+    std::vector<int> nums{1, 5, 10, 6};
+    canPartitionv3(nums);
 }

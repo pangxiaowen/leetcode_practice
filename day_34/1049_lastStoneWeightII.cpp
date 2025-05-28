@@ -11,6 +11,8 @@
 
 // 最后，最多只会剩下一块 石头。返回此石头 最小的可能重量 。如果没有石头剩下，就返回 0
 
+// 本题其实是尽量让石头分成重量相同的两堆（尽可能相同），相撞之后剩下的石头就是最小的。
+
 int lastStoneWeightII(std::vector<int> &stones)
 {
     // 如何转化为背包问题
@@ -25,6 +27,32 @@ int lastStoneWeightII(std::vector<int> &stones)
 
     // 一个容量为target的背包，尽可能的多装元素。
     std::vector<int> dp(target + 1, 0);
+    for (int i = 0; i < stones.size(); i++)
+    {
+        for (int j = target; j >= stones[i]; j--)
+        {
+            dp[j] = std::max(dp[j], dp[j - stones[i]] + stones[i]);
+        }
+    }
+
+    return sum - 2 * dp[target];
+}
+
+int lastStoneWeightII_(std::vector<int> &stones)
+{
+    // 如何转化为背包问题
+    // 将石头分成差值尽可能小的两个堆。
+
+    int sum = 0;
+    for (auto it : stones)
+    {
+        sum += it;
+    }
+    int target = sum / 2;
+
+    // 一个容量为target的背包，尽可能的多装元素。
+    std::vector<int> dp(target + 1, 0);
+
     for (int i = 0; i < stones.size(); i++)
     {
         for (int j = target; j >= stones[i]; j--)
