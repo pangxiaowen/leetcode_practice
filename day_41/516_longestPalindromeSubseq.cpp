@@ -51,11 +51,11 @@ int longestPalindromeSubseqv2(std::string s)
 
     for (int i = s.size() - 1; i >= 0; i--)
     {
-        for (int j = i; j < s.size(); j++)
+        for (int j = i + 1; j < s.size(); j++)
         {
             if (s[i] == s[j])
             {
-                dp[i][j] = dp[i + 1][j - 1] + 1;
+                dp[i][j] = dp[i + 1][j - 1] + 2;
             }
             else
             {
@@ -67,9 +67,39 @@ int longestPalindromeSubseqv2(std::string s)
     return dp[s.size()][s.size()];
 }
 
+int longestPalindromeSubseqv3(std::string s)
+{
+    // dp[i][j] [i][j]区间内最大回文串长度
+    std::vector<std::vector<bool>> dp(s.size(), std::vector<bool>(s.size(), false));
+
+    int substr_max_len = 0;
+
+    for (int i = s.size() - 1; i >= 0; i--)
+    {
+        for (int j = i; j < s.size(); j++)
+        {
+            if (s[i] == s[j])
+            {
+                if (j - i <= 1)
+                {
+                    substr_max_len = std::max(substr_max_len, j - i + 1);
+                    dp[i][j] = true;
+                }
+                else if (dp[i + 1][j - 1])
+                {
+                    substr_max_len = std::max(substr_max_len, j - i + 1);
+                    dp[i][j] = true;
+                }
+            }
+        }
+    }
+
+    return substr_max_len;
+}
+
 int main()
 {
     std::string s = "bbbab";
 
-    std::cout << longestPalindromeSubseq(s) << std::endl;
+    std::cout << longestPalindromeSubseqv3(s) << std::endl;
 }

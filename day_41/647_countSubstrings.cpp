@@ -45,8 +45,36 @@ int countSubstrings(std::string s)
     return result;
 }
 
+int countSubstringsv2(std::string s)
+{
+    std::vector<std::vector<int>> dp(s.size(), std::vector<int>(s.size(), false));
+
+    int result = 0;
+    for (int i = s.size() - 1; i >= 0; i--)
+    {
+        for (int j = i; j < s.size(); j++)
+        {
+            if (s[i] == s[j])
+            {
+                if (j - i <= 1)
+                {
+                    result++;
+                    dp[i][j] = true;
+                }
+                else if (dp[i + 1][j - 1])
+                {
+                    result++;
+                    dp[i][j] = true;
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
 int main()
 {
-    std::string s = "aaa";
-    std::cout << countSubstrings(s) << std::endl;
+    std::string s = "fdsklf";
+    std::cout << countSubstringsv2(s) << std::endl;
 }
