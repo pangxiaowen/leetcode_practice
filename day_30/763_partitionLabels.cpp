@@ -1,7 +1,7 @@
-#include <vector>
 #include <algorithm>
 #include <iostream>
 #include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -25,6 +25,32 @@ vector<int> partitionLabels(string s)
         {
             res.push_back(end - left + 1);
             left = end + 1;
+        }
+    }
+
+    return res;
+}
+
+std::vector<int> partitionLabelsv2(std::string s)
+{
+    std::unordered_map<char, int> map;
+
+    for (int i = 0; i < s.size(); i++)
+    {
+        map[s[i]] = i;
+    }
+
+    int left = 0;
+    int end = map[s[0]];
+    std::vector<int> res;
+
+    for (int i = 0; i < s.size(); i++)
+    {
+        end = std::max(map[s[i]], end);
+        if (i == end)
+        {
+            res.push_back(i - left + 1);
+            left = i + 1;
         }
     }
 

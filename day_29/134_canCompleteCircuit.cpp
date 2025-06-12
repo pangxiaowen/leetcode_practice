@@ -76,7 +76,7 @@ int canCompleteCircuit_v3(std::vector<int> &gas, std::vector<int> &cost)
 
     if (totalSum < 0)
         return -1;
-    return -1;
+    return start;
 }
 
 int main()

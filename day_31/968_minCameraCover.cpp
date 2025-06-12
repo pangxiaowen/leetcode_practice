@@ -1,3 +1,5 @@
+#include <vector>
+
 struct TreeNode
 {
     int val;
@@ -8,7 +10,7 @@ struct TreeNode
 int result;
 int traveral(TreeNode *cur)
 {
-    if (cur == nullptr)
+    if (cur == nullptr) // 如果当前节点为空，则认为已经被覆盖
         return 2;
 
     int left = traveral(cur->left);

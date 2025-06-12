@@ -1,11 +1,8 @@
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
-static bool cmp(const vector<int> &a, const vector<int> &b)
-{
-    return a[0] < b[0];
-}
+static bool cmp(const vector<int> &a, const vector<int> &b) { return a[0] < b[0]; }
 
 int findMinArrowShots(vector<vector<int>> &points)
 {
@@ -28,5 +25,30 @@ int findMinArrowShots(vector<vector<int>> &points)
         }
     }
 
-    return 0;
+    return count;
+}
+
+int findMinArrowShotsv2(vector<vector<int>> &points)
+{
+    std::sort(points.begin(), points.end(), cmp);
+
+    if (points.empty())
+        return 0;
+
+    int count = 1;
+    int end = points[0][1];
+    for (int i = 1; i < points.size(); i++)
+    {
+        if (end >= points[i][0]) // end > [i][xstart]
+        {
+            end = std::min(end, points[i][1]); // 更新end
+        }
+        else
+        {
+            count++;
+            end = points[i][1];
+        }
+    }
+
+    return count;
 }

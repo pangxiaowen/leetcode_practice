@@ -40,3 +40,27 @@ int maxSubArray_v2(vector<int> &nums)
 
     return result;
 }
+
+int maxSubArray_v3(vector<int> &nums)
+{
+    if (nums.empty())
+        return 0;
+
+    int left = 0;
+    int count = nums[0];
+    int result = count;
+
+    for (int i = 1; i < nums.size(); i++)
+    {
+        while (count < 0 && left < i)
+        {
+            count -= nums[left];
+            left++;
+        }
+
+        count += nums[i];
+        result = std::max(result, count);
+    }
+
+    return result;
+}
