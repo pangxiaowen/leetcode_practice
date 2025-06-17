@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstdint>
 #include <iostream>
 #include <queue>
 #include <stack>
@@ -6,13 +7,13 @@
 
 class TreeNode
 {
-  public:
+public:
     int val;
     TreeNode *left = nullptr;
     TreeNode *right = nullptr;
 };
 
-long pre = LONG_MIN;
+int pre = INT32_MIN;
 bool is_valid_bst(TreeNode *root)
 {
     if (root == nullptr)

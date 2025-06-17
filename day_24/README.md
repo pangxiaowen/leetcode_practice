@@ -71,6 +71,14 @@
    if( i > begin && nums[i] == nums[i-1])
       continue;
    ```
+3. 使用used进行去重
+
+   ```
+   if(i > 0 && nums[i] == nums[i-1] && used[i-1] == false)
+   {
+      continue;
+   }
+   ```
 
 
 

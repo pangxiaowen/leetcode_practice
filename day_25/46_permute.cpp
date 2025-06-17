@@ -42,3 +42,27 @@ void backtracking_v2(std::vector<int> nums, std::vector<bool> used)
         used[i] = false;
     }
 }
+
+// 确定参数以及返回值，由于是全排列问题，我们要记录有哪些已经使用过
+void backtracking_v3(const std::vector<int> &nums, std::vector<bool> &used)
+{
+    if (path.size() == nums.size())
+    {
+        result.push_back(path);
+        return;
+    }
+
+    for (int i = 0; i < nums.size(); i++)
+    {
+        if (used[i])
+        {
+            continue;
+        }
+
+        used[i] = true;
+        path.push_back(nums[i]);
+        backtracking_v3(nums, used);
+        path.pop_back();
+        used[i] = false;
+    }
+}

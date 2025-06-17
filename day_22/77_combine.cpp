@@ -25,6 +25,22 @@ std::vector<std::vector<int>> combine(int n, int k)
     return result;
 }
 
+void traceBacking(int n, int k, int start, std::vector<int> res)
+{
+    if (k == res.size())
+    {
+        result.push_back(res);
+        return;
+    }
+
+    for (int i = start; i <= (n - (k - res.size()) + 1); i++)
+    {
+        res.push_back(i);
+        traceBacking(n, k, i + 1, res);
+        res.pop_back();
+    }
+}
+
 int main()
 {
     auto res = combine(4, 4);

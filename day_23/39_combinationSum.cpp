@@ -1,47 +1,31 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 
 std::vector<std::vector<int>> result;
 std::vector<int> path;
 
-void combination_sum(std::vector<int> nums, int target, int start_index)
+void backTracking(const std::vector<int> &candidates, const int &target, int sum, int start_index)
 {
-    if (target == 0)
+    if (sum == target)
     {
         result.push_back(path);
         return;
     }
 
-    for (size_t i = start_index; i < nums.size(); ++i)
+    for (int i = start_index; i < candidates.size(); i++)
     {
-        if (target - nums[i] < 0)
-        {
-            continue;
-        }
-
-        path.push_back(nums[i]);
-        combination_sum(nums, target - nums[i], i);
+        path.push_back(candidates[i]);
+        sum += candidates[i];
+        if (sum <= target)
+            backTracking(candidates, target, sum, i);
+        sum -= candidates[i];
         path.pop_back();
     }
 }
 
-void backtracking(std::vector<int> &candidates, int target, int sum, int start_index)
+std::vector<std::vector<int>> combinationSum(std::vector<int> &candidates, int target)
 {
-    if (sum > target)
-        return;
-    if (sum == target)
-    {
-        result.push_back(path);
-    }
-
-    for (size_t i = start_index; i < candidates.size(); ++i)
-    {
-        if (sum + candidates[i] > target)
-            continue;
-        sum += candidates[i];
-        path.push_back(candidates[i]);
-        backtracking(candidates, target, sum, i);
-        path.pop_back();
-        sum -= candidates[i];
-    }
+    backTracking(candidates, target, 0, 0);
+    return result;
 }
